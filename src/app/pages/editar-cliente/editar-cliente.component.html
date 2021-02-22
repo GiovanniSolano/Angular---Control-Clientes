@@ -1,0 +1,94 @@
+<header id="main-header" class="py-2 bg-info text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1><i class="fas fa-user"></i> Editar Cliente</h1>
+            </div>
+        </div>
+    </div>
+</header>
+
+<form [formGroup]="formularioEditar" *ngIf="estaCreado" autocomplete="off" (ngSubmit)="editar()">
+    <!-- Botones -->
+
+    <section id="actions" class="py-4 mb-4 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <a routerLink="/" class="btn btn-light btn-block">
+                        <i class="fas fa-arrow-left"></i> Regresar a inicio
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" [disabled]="formularioEditar.invalid" class="btn btn-success btn-block">
+            <i class="fas fa-check"></i> Guardar Cliente
+          </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="details">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Editar Cliente</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="nombre">Nombre:</label>
+                                <input type="text" placeholder="Ingresa el nombre del cliente" [class.is-invalid]="nombreRequerido" formControlName="nombre" class="form-control" />
+                                <small class="form-text text-danger" *ngIf="nombreRequerido">El nombre es requerido</small
+                >
+              </div>
+              <div class="form-group">
+                <label for="apellido">Apellido:</label>
+                <input
+                  type="text"
+                  placeholder="Ingresa el apellido del cliente"
+                  [class.is-invalid]="apellidoRequerido"
+                  formControlName="apellido"
+                  class="form-control"
+                />
+                <small class="form-text text-danger" *ngIf="apellidoRequerido"
+                  >El apellido es requerido</small
+                >
+              </div>
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input
+                  type="email"
+                  [ngClass]="{ 'is-invalid': emailRequerido || emailNoValido }"
+                  placeholder="Ingresa el email del cliente"
+                  formControlName="email"
+                  class="form-control"
+                />
+                <small class="form-text text-danger" *ngIf="emailRequerido"
+                  >El email es requerido</small
+                >
+                <small class="form-text text-danger" *ngIf="emailNoValido"
+                  >El email no es válido</small
+                >
+              </div>
+              <div class="form-group">
+                <label for="saldo">Saldo:</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="saldo"
+                  [ngClass]="{ 'is-invalid': saldoRequerido }"
+                />
+                <small class="form-text text-danger" *ngIf="saldoRequerido"
+                  >El saldo es requerido</small
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>

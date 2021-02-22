@@ -1,0 +1,64 @@
+<header id="main-header" class="py-2 bg-info text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <h1><i class="fas fa-user"></i> Login</h1>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+
+<section id="actions" class="py-4 mb-4 bg-light">
+    <div class="container">
+        <div class="row">
+
+        </div>
+    </div>
+</section>
+
+<section id="login">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Login</h4>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="formularioLogin" autocomplete="off" (ngSubmit)="login()">
+
+                            <div class="form-group">
+                                <label for="email">Email: </label>
+                                <input placeholder="Ingresa tu email" [class.is-invalid]="emailRequerido || emailNoValido" type="email" class="form-control" formControlName="email">
+                                <small class="form-text text-danger" *ngIf="emailRequerido">El email es obligatorio</small>
+                                <small class="form-text text-danger" *ngIf="emailNoValido">El email no es válido</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password: </label>
+                                <input placeholder="Ingresa tu password" [class.is-invalid]="passwordRequerido" type="password" class="form-control" formControlName="password">
+                                <small class="form-text text-danger" *ngIf="passwordRequerido">El password es obligatorio</small>
+                            </div>
+                            <input type="submit" value="Iniciar Sesión" class="btn btn-primary btn-block">
+                            <button type="button" (click)="permitirRegistroDeClientes()" class="btn btn-secondary btn-block">Registrarse</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container" *ngIf="segundosRestantes != 0 && !permitirRegistro">
+
+    <div class="row">
+        <div class="col-md-9">
+
+            <small class="text-danger">Datos de prueba</small>
+            <p>giovanni@gmail.com | 123456</p>
+            <p>En la opción de configuración se habilita la opción para permitir registros</p>
+            <p>Este mensaje desaparecerá en {{segundosRestantes}} segundos</p>
+        </div>
+    </div>
+</div>

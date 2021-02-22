@@ -1,0 +1,142 @@
+<!-- Botones -->
+
+<section id="actions" class="py-4 mb-4 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <a (click)="crearFormulario()" class="btn btn-primary btn-block" data-toggle="modal" data-target="#agregarClienteModal">
+                    <i class="fas fa-plus"></i> Agregar Cliente
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Listado clientes -->
+
+<section id="clientes">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="div">
+
+                            <h4>Listado de clientes</h4>
+                        </div>
+                    </div>
+                    <table class="table table-striped text-center">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre</th>
+                                <th>Saldo</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let cliente of clientes; let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{cliente.nombre}} {{cliente.apellido}}</td>
+                                <td>{{cliente.saldo | currency: 'MNX': '$'}}</td>
+                                <td>
+                                    <a [routerLink]="['./cliente/editar', cliente.id]" class="btn btn-secondary">
+                                        <i class="fas fa-angle-double-right"></i> Editar
+                                    </a>
+
+                                    <a (click)="eliminar(cliente)" class="btn btn-danger ml-3">
+                                        <i class="fas fa-trash"></i> Eliminar
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <button class="btn btn-outline-dark" (click)="getClientes(-5)">Anteriores</button>
+                            </li>
+                            <li class="page-item">
+                                <button class="btn btn-outline-dark ml-2" (click)="getClientes(+5)">Siguientes</button>
+                            </li>
+                        </ul>
+                    </nav> -->
+                </div>
+            </div>
+            <!-- Tarjetas laterales -->
+
+            <div class="col-md-3">
+                <div class="card text-center bg-danger text-white mb-3">
+                    <div class="card-body">
+                        <h3>Saldo Total</h3>
+                        <h4 class="display-4">
+                            {{getSaldoTotal() | currency: 'MNX': '$'}}
+                        </h4>
+                    </div>
+                </div>
+                <div class="card text-center bg-success text-white mb-3">
+                    <div class="card-body">
+                        <h3>Total Clientes</h3>
+                        <h4 class="display-4">
+                            <i class="fas fa-users"></i> {{clientes?.length}}
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <!-- Fin tarjetas lateral -->
+        </div>
+    </div>
+</section>
+
+
+<!-- Agregar cliente modal -->
+
+<div class="modal fade" id="agregarClienteModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title">
+                    Agregar Cliente
+                </h5>
+                <button class="close" data-dismiss="modal" #botonCerrar>
+                    <span>&times;</span>
+                </button>
+            </div>
+
+            <!-- <flash-messages></flash-messages> -->
+
+            <form [formGroup]="formulario" autocomplete="off" (ngSubmit)="agregar()">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" placeholder="Ingresa el nombre del cliente" [class.is-invalid]="nombreRequerido" formControlName="nombre" class="form-control">
+                        <small class="form-text text-danger" *ngIf="nombreRequerido">El nombre es requerido</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido">Apellido:</label>
+                        <input type="text" placeholder="Ingresa el apellido del cliente" [class.is-invalid]="apellidoRequerido" formControlName="apellido" class="form-control">
+                        <small class="form-text text-danger" *ngIf="apellidoRequerido">El apellido es requerido</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" [ngClass]="{'is-invalid': emailRequerido || emailNoValido}" placeholder="Ingresa el email del cliente" formControlName="email" class="form-control">
+                        <small class="form-text text-danger" *ngIf="emailRequerido">El email es requerido</small>
+                        <small class="form-text text-danger" *ngIf="emailNoValido">El email no es válido</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="saldo">Saldo:</label>
+                        <input type="number" class="form-control" formControlName="saldo" [ngClass]="{'is-invalid': saldoRequerido}">
+                        <small class="form-text text-danger" *ngIf="saldoRequerido">El saldo es requerido</small>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="formulario.invalid" class="btn btn-primary" type="submit">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
